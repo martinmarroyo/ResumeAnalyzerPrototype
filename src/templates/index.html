@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Resume and Job Description</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Resume and Job Description</h1>
+        <form id="uploadForm" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="resume_file">Upload Resume (PDF):</label>
+                <input type="file" id="resume_file" name="resume_file" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="resume_text">Or paste resume text:</label>
+                <textarea id="resume_text" name="resume_text" class="form-control" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="job_description_file">Upload Job Description (PDF):</label>
+                <input type="file" id="job_description_file" name="job_description_file" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="job_description_text">Or paste job description text:</label>
+                <textarea id="job_description_text" name="job_description_text" class="form-control" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        <div id="statusMessage"></div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#uploadForm').on('submit', function(e) {
+                e.preventDefault();
+
+                $('#statusMessage').text('Processing your request...');
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '/',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        $('#statusMessage').text(data.message);
+                        if (data.status === "success") {
+                            $('#uploadForm')[0].reset();
+                        }
+                    },
+                    error: function() {
+                        $('#statusMessage').text('An error occurred. Please try again later.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

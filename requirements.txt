@@ -1,0 +1,11 @@
+flask
+flask-wtf
+langchain-core
+langchain-together
+langchain-community
+langchain-experimental
+pymupdf
+markdown2 
+reportlab
+python-dotenv
+weasyprint  
