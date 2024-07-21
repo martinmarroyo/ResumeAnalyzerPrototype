@@ -8,4 +8,4 @@ pymupdf
 markdown2 
 reportlab
 python-dotenv
-weasyprint  
+weasyprint
