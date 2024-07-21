@@ -1,4 +1,6 @@
-# AI Resume Analyzer Prototype
+# SkillSync Analyzer Prototype
+
+[Try SkillSync Analyzer here!](https://skillsyncanalyzer-0gtiy8v6.b4a.run/)
 
 This prototype is a submission for the lablab.ai Llama3 hackathon. The purpose of this application is to help job seekers better craft their resume or upskill for the roles they desire. Users can submit their resume, job description, and email address using our UI, then they will receive a full analysis of their resume to the email provided that includes:
 
