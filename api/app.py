@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 from langchain_together import Together
 from dotenv import load_dotenv
 from llm.agent import ResumeAnalyzer
-from utils.file_parser import load_file_from_path
+from utils.file_parser import load_file_from_path, delete_file
 import os
 import re
 
@@ -77,7 +77,9 @@ def index():
                 resume = load_file_from_path(resume_path)
                 job_description = load_file_from_path(job_description_path)
                 result = Agent.create_and_send_report(resume=resume, job_description=job_description, email=email)
-                
+                # Cleanup files from server
+                delete_file(resume_path)
+                delete_file(job_description_path)
                 if result["status"] == "Success":
                     return jsonify(message='Files successfully uploaded and report has been generated! Please check your email!', status="success")
                 else:
