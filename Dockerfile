@@ -8,11 +8,11 @@ RUN apt-get update && apt-get upgrade -y && \
 COPY api /app/src
 # Install the required dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-# Expose port 5000 for the Flask app
-EXPOSE 5000
+
+EXPOSE 80
 
 # Set the environment variable for Flask
 ENV FLASK_APP=app.py
 
 # Run the Flask app
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:app"]
